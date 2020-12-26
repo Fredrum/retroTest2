@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QCoreApplication>
 #include <QAction>
+#include <QGuiApplication>	//retropie
+#include <QScreen>			//retropie
 
 StreamWindow::StreamWindow(const StreamSessionConnectInfo &connect_info, QWidget *parent)
 	: QMainWindow(parent),
@@ -68,7 +70,16 @@ void StreamWindow::Init()
 	addAction(fullscreen_action);
 	connect(fullscreen_action, &QAction::triggered, this, &StreamWindow::ToggleFullscreen);
 
-	resize(connect_info.video_profile.width, connect_info.video_profile.height);
+	//retropie
+	if(QCoreApplication::arguments().contains("--retropie")) {
+		//fits size to main screen
+		QRect  screenGeometry = QGuiApplication::primaryScreen()->geometry();
+		resize(screenGeometry.width(), screenGeometry.height());
+		ToggleFullscreen();
+	} else {
+		resize(connect_info.video_profile.width, connect_info.video_profile.height);
+	}
+	
 	show();
 }
 

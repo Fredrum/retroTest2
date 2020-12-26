@@ -4,6 +4,7 @@
 #define CHIAKI_SERVERITEMWIDGET_H
 
 #include <QFrame>
+#include <servericonwidget.h> //retropie
 
 class QLabel;
 
@@ -33,8 +34,9 @@ class ServerItemWidget : public QFrame
 
 		bool IsSelected() { return selected; }
 		void SetSelected(bool selected);
-
 		void Update(const DisplayServer &display_server);
+		//retropie
+		ChiakiDiscoveryHostState GetState()	{ return icon_widget->GetState(); }
 
 	signals:
 		void Selected();

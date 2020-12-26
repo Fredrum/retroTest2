@@ -21,6 +21,8 @@ class ServerIconWidget : public QWidget
 		explicit ServerIconWidget(QWidget *parent = nullptr);
 
 		void SetState(ChiakiDiscoveryHostState state)	{ this->state = state; update(); }
+		//retropie
+		ChiakiDiscoveryHostState GetState()	{ return state; }
 };
 
 #endif // CHIAKI_SERVERICONWIDGET_H

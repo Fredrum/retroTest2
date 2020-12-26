@@ -8,6 +8,7 @@
 
 #include <QKeyEvent>
 #include <QAudioOutput>
+#include <QApplication>  //retropie
 
 #include <cstring>
 #include <chiaki/session.h>
@@ -287,6 +288,19 @@ void StreamSession::SendFeedbackState()
 #if CHIAKI_GUI_ENABLE_SDL_GAMECONTROLLER
 	if(controller)
 		state = controller->GetState();
+
+	//Retropie Quit
+	ChiakiControllerState kill_combo;
+	chiaki_controller_state_set_idle(&kill_combo);
+	kill_combo.buttons |= CHIAKI_CONTROLLER_BUTTON_R3;
+	kill_combo.buttons |= CHIAKI_CONTROLLER_BUTTON_MOON;
+
+	if(state.buttons == kill_combo.buttons)
+	{
+		Stop();
+		sleep(0.5);
+		QCoreApplication::quit();
+	}
 #endif
 
 #if CHIAKI_GUI_ENABLE_SETSU
